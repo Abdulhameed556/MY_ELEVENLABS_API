@@ -1,0 +1,1 @@
+{"detail":[{"type":"missing","loc":["body","news_id"],"msg":"Field required","input":{"title":"Test from cmd","body":"This is a quick live test of the TTS microservice. This is the second sentence to test chunking.","voice_name":"adam"},"url":"https://errors.pydantic.dev/2.11/v/missing"}]}

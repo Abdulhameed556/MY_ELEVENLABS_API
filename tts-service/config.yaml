@@ -1,0 +1,60 @@
+# TTS Service Configuration
+
+# Voice Configuration
+voices:
+  adam:
+    voice_id: "pNInz6obpgDQGcFmaJgB"
+    model: "eleven_flash_v2_5"
+    description: "Authoritative Male"
+    category: "news"
+    settings:
+      stability: 0.7
+      similarity_boost: 0.6
+      style: 0.2
+      use_speaker_boost: true
+
+  sarah:
+    voice_id: "EXAVITQu4vr4xnSDxMaL"
+    model: "eleven_turbo_v2_5" 
+    description: "Professional Female"
+    category: "news"
+    settings:
+      stability: 0.7
+      similarity_boost: 0.6
+      style: 0.2
+      use_speaker_boost: true
+
+  arnold:
+    voice_id: "VR6AewLTigWG4xSOukaG"
+    model: "eleven_multilingual_v2"
+    description: "Engaging Male"
+    category: "premium"
+    settings:
+      stability: 0.5
+      similarity_boost: 0.5
+      style: 0.0
+      use_speaker_boost: true
+
+# Service Configuration
+service:
+  name: "TTS Microservice"
+  version: "1.0.0"
+  max_concurrent_requests: 10
+  
+# Rate Limiting
+rate_limiting:
+  requests_per_minute: 60
+  burst_limit: 10
+
+# Audio Settings
+audio:
+  default_format: "mp3"
+  sample_rate: 22050
+  chunk_size: 2500
+  max_text_length: 10000
+
+# Monitoring
+monitoring:
+  enable_metrics: true
+  metrics_port: 9090
+  health_check_interval: 30

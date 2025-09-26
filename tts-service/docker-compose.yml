@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  tts-service:
+    build: .
+    ports:
+      - "8000:8000"
+      - "9090:9090"
+    environment:
+      - TTS_DEBUG=True
+      - TTS_LOG_LEVEL=INFO
+      - TTS_ELEVENLABS_API_KEY=${TTS_ELEVENLABS_API_KEY}
+    volumes:
+      - ./.env:/app/.env:ro
+      - ./config.yaml:/app/config.yaml:ro
+    depends_on:
+      - prometheus
+      - grafana
+    networks:
+      - tts-network
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9091:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+    networks:
+      - tts-network
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards
+    networks:
+      - tts-network
+
+volumes:
+  grafana-storage:
+
+networks:
+  tts-network:
+    driver: bridge

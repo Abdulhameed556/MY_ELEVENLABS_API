@@ -1,0 +1,41 @@
+# TTS Microservice Dependencies
+
+# Core FastAPI and server dependencies
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.11.4
+pydantic-settings==2.0.3
+
+# HTTP client and requests
+requests==2.31.0
+httpx==0.24.1
+
+# Audio processing
+pydub==0.25.1
+
+# Configuration and environment
+pyyaml==6.0.1
+python-dotenv==1.0.0
+
+# Monitoring and metrics
+prometheus-client==0.19.0
+
+# Logging and observability (optional but recommended)
+structlog==23.2.0
+
+# Development and testing dependencies
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+
+# Type checking and code quality (optional)
+mypy==1.7.1
+black==23.10.1
+flake8==6.1.0
+isort==5.12.0
+
+# Production server (alternative to uvicorn)
+gunicorn==21.2.0
+
+# Optional: For better JSON performance
+orjson==3.9.10
