@@ -41,7 +41,7 @@ COPY --from=builder /root/.local /home/tts/.local
 
 # Copy application code
 COPY app/ ./app/
-COPY config/ ./config/
+COPY config.yaml ./config.yaml
 
 # Set ownership
 RUN chown -R tts:tts /app
