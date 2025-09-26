@@ -41,7 +41,7 @@ COPY --from=builder /root/.local /home/tts/.local
 
 # Copy application code
 COPY app/ ./app/
-COPY config.yaml .
+COPY config/ ./config/
 
 # Set ownership
 RUN chown -R tts:tts /app
@@ -56,8 +56,11 @@ ENV PATH=/home/tts/.local/bin:$PATH
 EXPOSE 8000 9090
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
-    CMD python -c "import requests; requests.get('http://localhost:8000/v1/tts/health')"
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+    CMD python -c "import requests; requests.get('http://localhost:8000/v1/tts/health', timeout=10)" || exit 1
+
+# Set PYTHONPATH to ensure app module is found
+ENV PYTHONPATH=/app
 
 # Run the application
-CMD ["python", "-m", "app.main"]
+CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
